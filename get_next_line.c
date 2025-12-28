@@ -12,51 +12,51 @@
 
 #include "get_next_line.h"
 
-static char	*extract_line(char *s)
+static char	*extract_line(char *save)
 {
 	int		i;
 	char	*line;
 
-	if (!s || !s[0])
+	if (!save || !save[0])
 		return (NULL);
 	i = 0;
-	while (s[i] && s[i] != '\n')
+	while (save[i] && save[i] != '\n')
 		i++;
-	line = malloc(i + (s[i] == '\n') + 1);
+	line = malloc(i + (save[i] == '\n') + 1);
 	if (!line)
 		return (NULL);
 	i = 0;
-	while (s[i] && s[i] != '\n')
+	while (save[i] && save[i] != '\n')
 	{
-		line[i] = s[i];
+		line[i] = save[i];
 		i++;
 	}
-	if (s[i] == '\n')
+	if (save[i] == '\n')
 		line[i++] = '\n';
 	line[i] = '\0';
 	return (line);
 }
 
-static char	*clean_leftover(char *s)
+static char	*clean_leftover(char *save)
 {
 	int		i;
 	int		j;
 	char	*new;
 
 	i = 0;
-	while (s[i] && s[i] != '\n')
+	while (save[i] && save[i] != '\n')
 		i++;
-	if (!s[i])
-		return (free(s), NULL);
-	new = malloc(ft_strlen(s) - i);
+	if (!save[i])
+		return (free(save), NULL);
+	new = malloc(ft_strlen(save) - i);
 	if (!new)
 		return (NULL);
 	i++;
 	j = 0;
-	while (s[i])
-		new[j++] = s[i++];
+	while (save[i])
+		new[j++] = save[i++];
 	new[j] = '\0';
-	free(s);
+	free(save);
 	return (new);
 }
 
@@ -67,9 +67,9 @@ char	*get_next_line(int fd)
 	char		*line;
 	ssize_t		bytes;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX - 1)
 		return (NULL);
-	buffer = malloc(BUFFER_SIZE + 1);
+	buffer = malloc((size_t)BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
 	bytes = 1;
@@ -80,6 +80,8 @@ char	*get_next_line(int fd)
 			return (free(buffer), NULL);
 		buffer[bytes] = '\0';
 		save = ft_strjoin(save, buffer);
+		/*Change all the variables of helper functions and utils to 
+		the same variables as the main function*/
 	}
 	free(buffer);
 	line = extract_line(save);

@@ -12,48 +12,48 @@
 
 #include "get_next_line_bonus.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *save, char *buffer)
 {
-	char	*res;
+	char	*result;
 	size_t	j;
 	size_t	i;
 
-	if (!s1)
+	if (!save)
 	{
-		s1 = malloc(1);
-		if (!s1)
+		save = malloc(1);
+		if (!save)
 			return (NULL);
-		s1[0] = '\0';
+		save[0] = '\0';
 	}
-	res = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!res)
+	result = malloc(ft_strlen(save) + ft_strlen(buffer) + 1);
+	if (!result)
 		return (NULL);
 	i = -1;
-	while (s1[++i])
-		res[i] = s1[i];
+	while (save[++i])
+		result[i] = save[i];
 	j = 0;
-	while (s2[j])
-		res[i++] = s2[j++];
-	res[i] = '\0';
-	free(s1);
-	return (res);
+	while (buffer[j])
+		result[i++] = buffer[j++];
+	resultult[i] = '\0';
+	free(save);
+	return (result);
 }
 
-char	*ft_strchr(char *s, int c)
+char	*ft_strchr(char *save, int c)
 {
 	int	i;
 
-	if (!s)
+	if (!save)
 		return (NULL);
 	i = 0;
-	while (s[i])
+	while (save[i])
 	{
-		if (s[i] == (char)c)
-			return (&s[i]);
+		if (save[i] == (char)c)
+			return (&save[i]);
 		i++;
 	}
-	if (s[i] == (char)c)
-		return (&s[i]);
+	if (save[i] == (char)c)
+		return (&save[i]);
 	return (NULL);
 }
 
