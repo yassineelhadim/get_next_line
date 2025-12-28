@@ -67,9 +67,9 @@ char	*get_next_line(int fd)
 	char		*line;
 	ssize_t		bytes;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1024)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1024 || BUFFER_SIZE + 1 > INT_MAX)
 		return (NULL);
-	buffer = malloc(BUFFER_SIZE + 1);
+	buffer = malloc((size_t)BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
 	bytes = 1;
